@@ -1,0 +1,16 @@
+---
+import type { SimpleIcon } from 'simple-icons';
+
+interface Props {
+  /** A simple-icons icon, or null for the envelope */
+  icon: SimpleIcon | null;
+  class?: string;
+}
+const { icon, class: cls = 'size-5' } = Astro.props;
+const envelope =
+  'M1.5 4.5h21A1.5 1.5 0 0 1 24 6v12a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 0 18V6a1.5 1.5 0 0 1 1.5-1.5Zm.9 2.2v.3l9.6 6.3 9.6-6.3v-.3H2.4Zm19.2 2.7-9 5.9a1.1 1.1 0 0 1-1.2 0l-9-5.9V17.3h19.2V9.4Z';
+---
+
+<svg class={cls} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+  <path d={icon ? icon.path : envelope}></path>
+</svg>

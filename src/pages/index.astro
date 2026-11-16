@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import ReleaseCard from '../components/ReleaseCard.astro';
+import Icon from '../components/Icon.astro';
+import { bio, releases, site, socials } from '../data/site';
+import wordmark from '../assets/brand/wordmark.png';
+
+const latest = releases.slice(0, 4);
+const listen = socials.filter((s) => ['Spotify', 'Bandcamp', 'SoundCloud'].includes(s.name));
+---
+
+<Layout>
+  <!-- HERO -->
+  <section class="mx-auto flex min-h-[62svh] sm:min-h-[78svh] max-w-6xl flex-col justify-end px-5 pt-24 pb-14 sm:px-8">
+    <p class="rise mb-6 font-display text-xs font-semibold tracking-[0.4em] text-haze uppercase" style="--d: 100ms">
+      Electronic music by Eric Shans
+    </p>
+    <h1 class="rise" style="--d: 200ms">
+      <span class="sr-only">Phenotract</span>
+      <Image
+        src={wordmark}
+        alt=""
+        widths={[800, 1573]}
+        sizes="(min-width: 1152px) 1088px, 92vw"
+        loading="eager"
+        class="w-full drop-shadow-[0_0_40px_rgba(61,99,255,0.35)]"
+      />
+    </h1>
+    <div class="rise mt-10 flex flex-wrap items-center gap-3" style="--d: 350ms">
+      {
+        listen.map((s, i) => (
+          <a
+            href={s.href}
+            target="_blank"
+            rel="noopener"
+            class:list={[
+              'inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition',
+              i === 0
+                ? 'bg-glow text-white shadow-[0_0_30px_-6px_var(--color-glow)] hover:bg-glow-soft'
+                : 'glass text-white hover:bg-white/15',
+            ]}
+          >
+            <Icon icon={s.icon} class="size-4" /> {s.name}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- BIO -->
+  <section class="mx-auto max-w-6xl px-5 sm:px-8">
+    <div class="glass grid gap-8 rounded-3xl p-7 sm:p-10 md:grid-cols-12 md:p-14">
+      <h2 class="spaced text-sm text-glow-soft md:col-span-3">about</h2>
+      <div class="space-y-5 text-lg leading-relaxed text-haze md:col-span-9 md:text-xl">
+        {bio.map((p, i) => <p class:list={[i === bio.length - 1 && 'font-semibold text-white']}>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- LATEST -->
+  <section class="mx-auto mt-24 max-w-6xl px-5 sm:px-8">
+    <div class="mb-8 flex items-end justify-between gap-4">
+      <h2 class="spaced text-2xl sm:text-3xl">latest</h2>
+      <a href="/releases/" class="text-sm font-semibold text-white/70 hover:text-white">All {releases.length} releases →</a>
+    </div>
+    <div class="grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 lg:grid-cols-4">
+      {latest.map((r) => <ReleaseCard release={r} />)}
+    </div>
+  </section>
+</Layout>

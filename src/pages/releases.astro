@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ReleaseCard from '../components/ReleaseCard.astro';
+import { releases } from '../data/site';
+
+const years = releases.map((r) => r.year).filter((y): y is number => y !== null);
+---
+
+<Layout title="Releases" description={`The Phenotract discography: ${releases.length} albums, EPs and singles.`}>
+  <section class="mx-auto max-w-6xl px-5 pt-16 sm:px-8 sm:pt-24">
+    <header class="rise mb-12 flex flex-wrap items-end justify-between gap-4 border-b border-white/10 pb-8">
+      <h1 class="spaced text-4xl sm:text-6xl">releases</h1>
+      <p class="font-display text-xs font-semibold tracking-[0.3em] text-white/50 uppercase">
+        {releases.length} records · {Math.min(...years)}–{Math.max(...years)}
+      </p>
+    </header>
+    <div class="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4">
+      {releases.map((r, i) => <ReleaseCard release={r} eager={i < 4} />)}
+    </div>
+  </section>
+</Layout>
